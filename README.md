@@ -7,7 +7,7 @@ Simple script to gather class data from Oregon State's [course catalog](http://c
 ## Usage
 ```shell
 bundle install
-bundle exec scraper.rb <filename>
+bundle exec ruby scraper.rb <filename>
 ```
 
 ## License
