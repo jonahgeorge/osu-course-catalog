@@ -1,4 +1,6 @@
 require 'open-uri'
+require 'nokogiri'
+require 'ruby-progressbar'
 require 'csv'
 
 def fetch_departments()
