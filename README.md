@@ -1,4 +1,6 @@
 ## OSU Course Catalog Scraper
+[![Gem Version](https://badge.fury.io/rb/osu-cc-scraper.svg)](http://badge.fury.io/rb/osu-cc-scraper)
+[![Build Status](https://travis-ci.org/jonahgeorge/osu-cc-scraper.svg?branch=master)](https://travis-ci.org/jonahgeorge/osu-cc-scraper)
 
 A script to gather course data from Oregon State's [Course Catalog](http://catalog.oregonstate.edu/).
 
