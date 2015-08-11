@@ -32,4 +32,23 @@ describe OsuCcScraper::Section do
     #   expect(sections[7].term).to eq("")
     # end
   end
+
+  describe "#to_a" do
+    it "returns the correct values" do
+      section = OsuCcScraper::Section.new({
+        :department   => "ACTG",
+        :number       => "317",
+        :name         => "EXTERNAL REPORTING I",
+        :term         => "F15",
+        :section      => "001",
+        :instructor   => "Scott, B.",
+        :type         => "Lecture",
+        :status       => "Waitlisted",
+        :capacity     => "30",
+        :availability => "30"
+      })
+
+      expect(section.to_a).to eq(["ACTG","317","EXTERNAL REPORTING I","F15","001","Scott, B.","Lecture","Waitlisted","30","30"])
+    end
+  end
 end

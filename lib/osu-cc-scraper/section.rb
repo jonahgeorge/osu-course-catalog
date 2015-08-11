@@ -19,6 +19,10 @@ class OsuCcScraper::Section
     end
   end
 
+  def to_a
+    [@department, @number, @name, @term, @section, @instructor, @type, @status, @capacity, @availability]
+  end
+
   private
 
   def self.fetch(subject_code, course_number)
