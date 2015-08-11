@@ -3,15 +3,19 @@ require "nokogiri"
 require "osu-cc-scraper/section"
 
 class OsuCcScraper::Course
+  # @return [String]
   attr_accessor :subject_code
+  # @return [String]
   attr_accessor :course_number
 
+  # @return [OsuCcScraper::Course]
   def initialize(args)
     args.each do |k,v|
       instance_variable_set("@#{k}", v) unless v.nil?
     end
   end
 
+  # @return [Array<OsuCcScraper::Section>]
   def sections
     html = OsuCcScraper::Section::fetch(self.subject_code, self.course_number)
     OsuCcScraper::Section::parse(html)

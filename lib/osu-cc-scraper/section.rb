@@ -2,23 +2,35 @@ require "open-uri"
 require "nokogiri"
 
 class OsuCcScraper::Section
+  # @return [String]
   attr_accessor :department
+  # @return [String]
   attr_accessor :number
+  # @return [String]
   attr_accessor :name
+  # @return [String]
   attr_accessor :term
+  # @return [String]
   attr_accessor :section
+  # @return [String]
   attr_accessor :instructor
+  # @return [String]
   attr_accessor :type
+  # @return [String]
   attr_accessor :status
+  # @return [String]
   attr_accessor :capacity
+  # @return [String]
   attr_accessor :availability
 
+  # @return [OsuCcScraper::Section]
   def initialize(args)
     args.each do |k,v|
       instance_variable_set("@#{k}", v) unless v.nil?
     end
   end
 
+  # @return [Array]
   def to_a
     [@department, @number, @name, @term, @section, @instructor, @type, @status, @capacity, @availability]
   end
