@@ -16,4 +16,4 @@ osu-cc-scraper > $(date +%Y-%m-%d).csv
 - [RubyDoc](http://www.rubydoc.info/gems/osu-cc-scraper/)
 
 #### Data
-[2014-11-16.csv](https://gist.github.com/jonahgeorge/ed765a708e09a3f88ab6)
+- [2014-11-16.csv](https://gist.github.com/jonahgeorge/ed765a708e09a3f88ab6)
