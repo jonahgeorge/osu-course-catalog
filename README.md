@@ -5,7 +5,7 @@
 
 A script to gather course data from Oregon State University's [Course Catalog](http://catalog.oregonstate.edu/).
 
-> **Warning!** Use of this program may be against Oregon State University's Acceptable Use Policy. Use at your own risk.
+> **Warning!** Use of this gem may be against Oregon State University's Acceptable Use Policy. Use at your own risk.
 
 #### Example
 ```ruby
