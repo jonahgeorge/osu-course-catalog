@@ -1,5 +1,8 @@
 #!/usr/bin/env ruby
 
+# Description: Prints course data to stdout in csv format.
+# Usage:       ruby basic.rb > courses_$(date +%Y%m%d).csv
+
 require "osu-cc-scraper"
 require "csv"
 
