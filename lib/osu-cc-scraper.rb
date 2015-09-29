@@ -1,4 +1,4 @@
-class OsuCcScraper
+module OsuCcScraper
   ENDPOINT = "http://catalog.oregonstate.edu"
 end
 
