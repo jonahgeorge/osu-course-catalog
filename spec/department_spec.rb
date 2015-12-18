@@ -1,4 +1,4 @@
-require_relative '../lib/osu-cc-scraper.rb'
+require_relative "../lib/osu-cc-scraper.rb"
 
 describe OsuCcScraper::Department do
   context '#parse' do
