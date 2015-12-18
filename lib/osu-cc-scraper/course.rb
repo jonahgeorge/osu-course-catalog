@@ -7,6 +7,8 @@ class OsuCcScraper::Course
   attr_accessor :subject_code
   # @return [String]
   attr_accessor :course_number
+  # @return [String]
+  attr_accessor :name
 
   # @return [OsuCcScraper::Course]
   def initialize(args)
@@ -30,12 +32,12 @@ class OsuCcScraper::Course
   def self.parse(html)
     ng = Nokogiri::HTML(html)
     ng.css("tr td strong a:last").map{ |course|
-      uri = course.attribute('href').to_s.gsub('CourseDetail.aspx?', '')
-      params = URI.decode_www_form(uri).to_h
-      OsuCcScraper::Course.new({
-        subject_code: params["subjectcode"],
-        course_number: params["coursenumber"]
-      })
+      # NE 311H INTRODUCTION TO THERMAL-FLUID SCIENCES (4)
+      parts = course.text.split(' ')
+      OsuCcScraper::Course.new \
+        subject_code:  parts[0],
+        course_number: parts[1],
+        name:          parts[2..parts.length-2].join(" ")
     }
   end
 end
