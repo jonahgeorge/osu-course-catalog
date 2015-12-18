@@ -1,4 +1,4 @@
-require 'helper'
+require_relative '../lib/osu-cc-scraper.rb'
 
 describe OsuCcScraper::Course do
   describe '#parse' do
