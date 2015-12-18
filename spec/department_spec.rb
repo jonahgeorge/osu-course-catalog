@@ -8,10 +8,16 @@ describe OsuCcScraper::Department do
       expect(departments.size).to eq(130)
     end
 
-    it "populates the subject_code" do
+    it "populates the #name attribute" do
       html = File.open("./spec/responses/departments.html").read
       departments = OsuCcScraper::Department.send(:parse, html)
       expect(departments[129].subject_code).to eq("Z")
+    end
+
+    it "populates the #subject_code attribute" do
+      html = File.open("./spec/responses/departments.html").read
+      departments = OsuCcScraper::Department.send(:parse, html)
+      expect(departments[129].name).to eq("Zoology")
     end
   end
 end

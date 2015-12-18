@@ -4,6 +4,8 @@ require "osu-cc-scraper/course"
 
 class OsuCcScraper::Department
   # @return [String]
+  attr_accessor :name
+  # @return [String]
   attr_accessor :subject_code
 
   # @return [OsuCcScraper::Department]
@@ -35,7 +37,8 @@ class OsuCcScraper::Department
     ng = Nokogiri::HTML(html)
     ng.xpath("//tr/td/font/a").map{ |department|
       OsuCcScraper::Department.new({
-        subject_code: department.content[/\(.*?\)/][1..-2]
+        subject_code: department.content[/\(.*?\)/][1..-2],
+        name:         department.content[/([^(]+)/].strip
       })
     }.sort { |a,b|
       a.subject_code.downcase <=> b.subject_code.downcase
