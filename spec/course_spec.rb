@@ -1,30 +1,33 @@
 require 'helper'
 
 describe OsuCcScraper::Course do
-  describe '#parse' do
-    it "return the correct number of courses" do
-      html = File.open("./spec/responses/courses.html").read
-      courses = OsuCcScraper::Course.send(:parse, html)
-      expect(courses.size).to eq(37)
-    end
+  it '#sections' do
+    html = File.open("./spec/responses/sections.html").read
+    sections = OsuCcScraper::Course.new.send(:parse_sections, html)
+    expect(sections.size).to eq(8)
+  end
 
-    it "populates #subject_code" do
-      html = File.open("./spec/responses/courses.html").read
-      courses = OsuCcScraper::Course.send(:parse, html)
-      expect(courses[3].subject_code).to eq("NE")
-    end
+  it "populates the department" do
+    html = File.open("./spec/responses/sections.html").read
+    sections = OsuCcScraper::Course.new.send(:parse_sections, html)
+    expect(sections[7].department).to eq("ST")
+  end
 
-    it "populates #course_number" do
-      html = File.open("./spec/responses/courses.html").read
-      courses = OsuCcScraper::Course.send(:parse, html)
-      expect(courses[3].course_number).to eq("235")
-    end
+  it "populates the number" do
+    html = File.open("./spec/responses/sections.html").read
+    sections = OsuCcScraper::Course.new.send(:parse_sections, html)
+    expect(sections[7].number).to eq("202")
+  end
 
-    it "populates #name" do
-      html = File.open("./spec/responses/courses.html").read
-      courses = OsuCcScraper::Course.send(:parse, html)
-      expect(courses[3].name).to eq("NUCLEAR AND RADIATION PHYSICS II")
-    end
+  it "populates the name" do
+    html = File.open("./spec/responses/sections.html").read
+    sections = OsuCcScraper::Course.new.send(:parse_sections, html)
+    expect(sections[7].name).to eq("PRINCIPLES OF STATISTICS")
+  end
 
+  it "populates the term" do
+    html = File.open("./spec/responses/sections.html").read
+    sections = OsuCcScraper::Course.new.send(:parse_sections, html)
+    expect(sections[7].term).to eq("Sp16")
   end
 end

@@ -1,47 +1,45 @@
 require "open-uri"
-require "nokogiri"
+require "oga"
+
 require "osu-cc-scraper/course"
 
-class OsuCcScraper::Department
-  # @return [String]
-  attr_accessor :name
-  # @return [String]
-  attr_accessor :subject_code
+module OsuCcScraper
+  class Department < Struct.new(:name, :subject_code)
 
-  # @return [OsuCcScraper::Department]
-  def initialize(args)
-    args.each do |k,v|
-      instance_variable_set("@#{k}", v) unless v.nil?
+    def courses
+      html = fetch_courses
+      parse_courses(html)
     end
-  end
 
-  # @return [Array<OsuCcScraper::Department>]
-  def self.all
-    html = OsuCcScraper::Department::fetch
-    OsuCcScraper::Department::parse(html)
-  end
+    private
 
-  # @return [Array<OsuCcScraper::Course>]
-  def courses
-    html = OsuCcScraper::Course::fetch(self.subject_code)
-    OsuCcScraper::Course::parse(html)
-  end
+      def fetch_courses
+        open("#{ENDPOINT}/CourseList.aspx?subjectcode=#{subject_code}&level=undergrad&campus=corvallis").read
+      end
 
-  private
+      def parse_courses(html)
+        document = Oga.parse_html(html)
+        document.xpath("//tr//td//strong/a[last()]").map { |row|
+          Course.new(
+            parse_course_subject_code(row),
+            parse_course_course_number(row),
+            parse_course_name(row)
+          )
+        }
+      end
 
-  def self.fetch
-    open("#{OsuCcScraper::ENDPOINT}/CourseDescription.aspx?level=undergrad").read
-  end
+      # NE 311H INTRODUCTION TO THERMAL-FLUID SCIENCES (4)
+      def parse_course_subject_code(row)
+        row.text.split(' ')[0]
+      end
 
-  def self.parse(html)
-    ng = Nokogiri::HTML(html)
-    ng.xpath("//tr/td/font/a").map{ |department|
-      OsuCcScraper::Department.new({
-        subject_code: department.content[/\(.*?\)/][1..-2],
-        name:         department.content[/([^(]+)/].strip
-      })
-    }.sort { |a,b|
-      a.subject_code.downcase <=> b.subject_code.downcase
-    }
+      def parse_course_course_number(row)
+        row.text.split(' ')[1]
+      end
+
+      def parse_course_name(row)
+        row.text.split(' ')[2..-2].join(" ")
+      end
+
   end
 end
