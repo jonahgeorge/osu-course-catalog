@@ -1,10 +1,9 @@
 require "open-uri"
 require "oga"
-
 require "osu-cc-scraper/section"
 
 module OsuCcScraper
-  class Course < Struct.new(:subject_code, :course_number, :name)
+  class Course < Struct.new(:department, :course_number, :name)
 
     def sections
       html = fetch_sections
@@ -17,7 +16,7 @@ module OsuCcScraper
       TITLE_XPATH = "//form/h3"
 
       def fetch_sections
-        open("#{ENDPOINT}/CourseDetail.aspx?subjectcode=#{subject_code}&coursenumber=#{course_number}").read
+        open("#{ENDPOINT}/CourseDetail.aspx?subjectcode=#{department.subject_code}&coursenumber=#{course_number}").read
       end
 
       def parse_sections(html)
@@ -25,9 +24,7 @@ module OsuCcScraper
 
         document.xpath(SECTIONS_XPATH).map { |row|
           Section.new(
-            parse_department(document),
-            parse_number(document),
-            parse_name(document),
+            self,
             parse_term(row),
             parse_section(row),
             parse_instructor(row),
@@ -42,21 +39,6 @@ module OsuCcScraper
 
       def fetch_column(document, selector)
         document.xpath(selector)&.text&.delete("\r\n")&.strip
-      end
-
-      def parse_department(document)
-        title = document.xpath(TITLE_XPATH).text.split("\n")
-        title[2].delete("\r\n").strip[0..-2].split(" ")[0]
-      end
-
-      def parse_number(document)
-        title = document.xpath(TITLE_XPATH).text.split("\n")
-        title[2].split(" ")[1][0..-2]
-      end
-
-      def parse_name(document)
-        title = document.xpath(TITLE_XPATH).text.split("\n")
-        title[3].strip
       end
 
       def parse_term(row)
