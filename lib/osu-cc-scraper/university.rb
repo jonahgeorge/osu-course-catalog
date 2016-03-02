@@ -11,27 +11,29 @@ module OsuCcScraper
       parse_departments(html)
     end
 
-    def fetch_departments
-      open("#{ENDPOINT}/CourseDescription.aspx?level=undergrad").read
-    end
+    private
 
-    def parse_departments(html)
-      ng = Oga.parse_html(html)
-      ng.xpath("//tr/td/font/a").map { |row|
-        Department.new(
-          parse_department_name(row),
-          parse_department_subject_code(row), 
-        )
-      }
-    end
+      def fetch_departments
+        open("#{ENDPOINT}/CourseDescription.aspx?level=undergrad").read
+      end
 
-    def parse_department_subject_code(row)
-      row.text[/\(.*?\)/][1..-2]    
-    end
+      def parse_departments(html)
+        ng = Oga.parse_html(html)
+        ng.xpath("//tr/td/font/a").map { |row|
+          Department.new(
+            parse_department_name(row),
+            parse_department_subject_code(row),
+          )
+        }
+      end
 
-    def parse_department_name(row)
-      row.text[/([^(]+)/].strip    
-    end
+      def parse_department_subject_code(row)
+        row.text[/\(.*?\)/][1..-2]
+      end
+
+      def parse_department_name(row)
+        row.text[/([^(]+)/].strip
+      end
 
   end
 end
