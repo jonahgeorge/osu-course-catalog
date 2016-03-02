@@ -15,10 +15,10 @@ A script to gather course data from Oregon State University's [Course Catalog](h
 require "osu-cc-scraper"
 require "csv"
 
-columns = %w(Department Number Name Term Section Instructor Type Status Capacity Current)
-puts columns.to_csv
+puts %w(Department Number Name Term Section Instructor
+        Campus Type Status Capacity Current).to_csv
 
-university = OsuCcScraper::University.new
+university = OsuCcScraper::University.new("Undergrad")
 
 university.departments.each do |department|
   department.courses.each do |course|

@@ -2,6 +2,17 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.0.0] - 2016-03-02
+- `University#fetch_departments` is now private
+- `University#parse_departments` is now private
+- `University#parse_department_subject_code` is now private
+- `University#parse_department_name` is now private
+- `Section` has a new `campus` field
+  - This modifies the constructor
+- `University` has a new `level` field
+  - This modifies the constructor
+  - This allows the scraper to find Undergraduate or Graduate level courses
+
 ## [2.0.0] - 2016-02-19
 - Switched from Nokogiri to Oga from HTML parsing
 - Added `University` class and `#departments` method to replace `Department#all`
