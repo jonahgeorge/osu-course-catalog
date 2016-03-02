@@ -23,17 +23,18 @@ module OsuCcScraper
       def parse_sections(html)
         document = Oga.parse_html(html)
 
-        document.xpath(SECTIONS_XPATH).map { |row| 
+        document.xpath(SECTIONS_XPATH).map { |row|
           Section.new(
-            parse_department(document), 
-            parse_number(document), 
-            parse_name(document), 
-            parse_term(row), 
+            parse_department(document),
+            parse_number(document),
+            parse_name(document),
+            parse_term(row),
             parse_section(row),
-            parse_instructor(row), 
-            parse_type(row), 
+            parse_instructor(row),
+            parse_campus(row),
+            parse_type(row),
             parse_status(row),
-            parse_capacity(row), 
+            parse_capacity(row),
             parse_current(row)
           )
         }
@@ -68,6 +69,10 @@ module OsuCcScraper
 
       def parse_instructor(row)
         fetch_column(row, "td[position() = 6]")
+      end
+
+      def parse_campus(row)
+        fetch_column(row, "td[position() = 9]")
       end
 
       def parse_type(row)
