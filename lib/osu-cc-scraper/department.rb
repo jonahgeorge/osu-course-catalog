@@ -1,26 +1,35 @@
 require "open-uri"
 require "oga"
 require "osu-cc-scraper/course"
+require "json"
 
 module OsuCcScraper
-  class Department < Struct.new(:university, :name, :subject_code)
+  class Department < Struct.new(:name, :subject_code)
 
     def courses
       html = fetch_courses
       parse_courses(html)
     end
 
+    def to_json
+      self.to_h.to_json
+    end
+
+    def self.from_json(json)
+      Department.new(*JSON.parse(json).values)
+    end
+
     private
 
       def fetch_courses
-        open("#{ENDPOINT}/CourseList.aspx?subjectcode=#{subject_code}&level=#{university.level}").read
+        open("#{ENDPOINT}/CourseList.aspx?subjectcode=#{subject_code}").read
       end
 
       def parse_courses(html)
         document = Oga.parse_html(html)
         document.xpath("//tr//td//strong/a[last()]").map { |row|
           Course.new(
-            self,
+            subject_code,
             parse_course_course_number(row),
             parse_course_name(row)
           )

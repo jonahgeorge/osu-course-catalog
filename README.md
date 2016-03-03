@@ -18,7 +18,7 @@ require "csv"
 puts %w(Department Number Name Term Section Instructor
         Campus Type Status Capacity Current).to_csv
 
-university = OsuCcScraper::University.new("Undergrad")
+university = OsuCcScraper::University.new
 
 university.departments.each do |department|
   department.courses.each do |course|

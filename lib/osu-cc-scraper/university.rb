@@ -3,7 +3,7 @@ require "oga"
 require "osu-cc-scraper/department"
 
 module OsuCcScraper
-  class University < Struct.new(:level)
+  class University
 
     def departments
       html = fetch_departments
@@ -13,14 +13,13 @@ module OsuCcScraper
     private
 
       def fetch_departments
-        open("#{ENDPOINT}/CourseDescription.aspx?level=#{level}").read
+        open("#{ENDPOINT}/CourseDescription.aspx").read
       end
 
       def parse_departments(html)
         ng = Oga.parse_html(html)
         ng.xpath("//tr/td/font/a").map { |row|
           Department.new(
-            self,
             parse_department_name(row),
             parse_department_subject_code(row),
           )

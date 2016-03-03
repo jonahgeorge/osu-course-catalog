@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.0.0] - 2016-03-02
+This release pretty much reverses most of the Struct "re-structuring" of 3.0.0 🙈
+Turns out there's a much easier way to get access to Graduate level courses by just dropping a GET param.
+- Added `to_json` and `from_json` on `Department`
+- Added `to_json` and `from_json` on `Course`
+
 ## [3.0.0] - 2016-03-02
 - `University#fetch_departments` is now private
 - `University#parse_departments` is now private

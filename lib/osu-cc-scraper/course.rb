@@ -1,13 +1,22 @@
 require "open-uri"
 require "oga"
 require "osu-cc-scraper/section"
+require "json"
 
 module OsuCcScraper
-  class Course < Struct.new(:department, :course_number, :name)
+  class Course < Struct.new(:subject_code, :course_number, :name)
 
     def sections
       html = fetch_sections
       parse_sections(html)
+    end
+
+    def to_json
+      self.to_h.to_json
+    end
+
+    def self.from_json(json)
+      Course.new(*JSON.parse(json).values)
     end
 
     private
@@ -16,7 +25,7 @@ module OsuCcScraper
       TITLE_XPATH = "//form/h3"
 
       def fetch_sections
-        open("#{ENDPOINT}/CourseDetail.aspx?subjectcode=#{department.subject_code}&coursenumber=#{course_number}").read
+        open("#{ENDPOINT}/CourseDetail.aspx?subjectcode=#{subject_code}&coursenumber=#{course_number}").read
       end
 
       def parse_sections(html)
@@ -24,7 +33,9 @@ module OsuCcScraper
 
         document.xpath(SECTIONS_XPATH).map { |row|
           Section.new(
-            self,
+            subject_code,
+            course_number,
+            name,
             parse_term(row),
             parse_section(row),
             parse_instructor(row),
