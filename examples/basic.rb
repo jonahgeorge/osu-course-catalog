@@ -4,7 +4,7 @@
 require "osu-cc-scraper"
 require "csv"
 
-puts %w(Department Number Name Term Section Instructor
+puts %w(Department Number Name Term CRN Section Instructor
         Campus Type Status Capacity Current).to_csv
 
 university = OsuCcScraper::University.new

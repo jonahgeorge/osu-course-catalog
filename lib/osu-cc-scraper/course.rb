@@ -37,6 +37,7 @@ module OsuCcScraper
             course_number,
             name,
             parse_term(row),
+            parse_crn(row),
             parse_section(row),
             parse_instructor(row),
             parse_campus(row),
@@ -54,6 +55,10 @@ module OsuCcScraper
 
       def parse_term(row)
         fetch_column(row, "td[position() = 1]")
+      end
+
+      def parse_crn(row)
+        fetch_column(row, "td[position() = 2]")
       end
 
       def parse_section(row)
