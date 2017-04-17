@@ -1,4 +1,6 @@
 ## OSU Course Catalog Scraper
+
+[![Join the chat at https://gitter.im/jonahgeorge/osu-cc-scraper](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/jonahgeorge/osu-cc-scraper?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Gem Version](https://badge.fury.io/rb/osu-cc-scraper.svg)](http://badge.fury.io/rb/osu-cc-scraper)
 [![Build Status](https://travis-ci.org/jonahgeorge/osu-course-catalog.svg?branch=master)](https://travis-ci.org/jonahgeorge/osu-course-catalog)
 [![Inline docs](https://img.shields.io/badge/docs-rubydoc-blue.svg)](http://www.rubydoc.info/gems/osu-cc-scraper/)
